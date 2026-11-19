@@ -2,18 +2,26 @@ package com.example.banking.dto;
 
 import com.example.banking.enums.CustomerStatus;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class CustomerDto {
 
 	private Long customerId;
+
+	@NotBlank(message = "Full name is required")
+	@Size(max = 120)
 	private String fullName;
+
+	@NotBlank(message = "Email is required")
+	@Email(message = "Invalid email format")
+	@Size(max = 254)
 	private String email;
+
 	private CustomerStatus status;
 
-	public CustomerDto(Long customerId, String fullName, String email, CustomerStatus status) {
-		this.customerId = customerId;
-		this.fullName = fullName;
-		this.email = email;
-		this.status = status;
+	public CustomerDto() {
 	}
 
 	public Long getCustomerId() {
@@ -30,6 +38,22 @@ public class CustomerDto {
 
 	public CustomerStatus getStatus() {
 		return status;
+	}
+
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setStatus(CustomerStatus status) {
+		this.status = status;
 	}
 
 	@Override

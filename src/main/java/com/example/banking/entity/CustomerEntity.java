@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "BANK_CUSTOMERS")
 public class CustomerEntity {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CUSTOMER_ID")
@@ -21,6 +21,10 @@ public class CustomerEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS", nullable = false)
 	private CustomerStatus status;
+	
+	protected CustomerEntity() {
+		
+	}
 
 	public CustomerEntity(String fullName, String email) {
 		this.fullName = fullName;
