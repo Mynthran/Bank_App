@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import com.example.banking.enums.AccountStatus;
 import com.example.banking.enums.AccountType;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.generator.EventType;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -45,10 +48,10 @@ public class AccountEntity {
 	@Column(name = "VERSION", nullable = false)
 	private Long version;
 
+	@Generated(event = EventType.INSERT)
 	@Column(name = "CREATED_AT", nullable = false, insertable = false, updatable = false)
 	private LocalDateTime createdAt;
 
-	
 	protected AccountEntity() {
 
 	}
@@ -106,10 +109,10 @@ public class AccountEntity {
 
 	@Override
 	public String toString() {
-		return "AccountEntity [accountId=" + accountId + ", accountNumber=" + accountNumber + ", customer=" + customer
-				+ ", accountType=" + accountType + ", postedBalance=" + postedBalance + ", reservedAmount="
-				+ reservedAmount + ", currency=" + currency + ", status=" + status + ", version=" + version
-				+ ", createdAt=" + createdAt + "]";
+	    return "AccountEntity [accountId=" + accountId
+	            + ", accountNumber=" + accountNumber
+	            + ", accountType=" + accountType
+	            + ", status=" + status + "]";
 	}
 
 }

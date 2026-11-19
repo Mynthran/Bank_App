@@ -15,30 +15,31 @@ public class ApiExceptionHandler {
 	public ResponseEntity<Map<String, String>> notFound(CustomerNotFoundException e) {
 		return error(HttpStatus.NOT_FOUND, "CUSTOMER_NOT_FOUND", e.getMessage());
 	}
+
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<Map<String, String>> conflict(DataIntegrityViolationException ex) {
+
+		return error(HttpStatus.CONFLICT, "CONSTRAINT_VIOLATION", "The request violates a database constraint");
+	}
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Map<String, String>> invalid(MethodArgumentNotValidException ex) {
+
+		String message = ex.getBindingResult().getFieldErrors().stream().findFirst()
+				.map(e -> e.getField() + ": " + e.getDefaultMessage()).orElse("Invalid request");
+
+		return error(HttpStatus.BAD_REQUEST, "VALIDATION_ERROR", message);
+	}
 	
-	 @ExceptionHandler(DataIntegrityViolationException.class)
-	    public ResponseEntity<Map<String, String>> conflict(
-	            DataIntegrityViolationException ex) {
-
-	        return error(HttpStatus.CONFLICT,
-	                "CONSTRAINT_VIOLATION",
-	                "The request violates a database constraint");
-	    }
-
-	    @ExceptionHandler(MethodArgumentNotValidException.class)
-	    public ResponseEntity<Map<String, String>> invalid(
-	            MethodArgumentNotValidException ex) {
-
-	        String message = ex.getBindingResult()
-	                .getFieldErrors().stream()
-	                .findFirst()
-	                .map(e -> e.getField() + ": "
-	                        + e.getDefaultMessage())
-	                .orElse("Invalid request");
-
-	        return error(HttpStatus.BAD_REQUEST,
-	                "VALIDATION_ERROR", message);
-	    }
+	@ExceptionHandler(AccountNotFoundException.class)
+	public ResponseEntity<Map<String, String>> accountNotFound(AccountNotFoundException e) {
+		return error(HttpStatus.NOT_FOUND, "ACCOUNT_NOT_FOUND", e.getMessage());
+	}
+	
+	@ExceptionHandler(CustomerNotActiveException.class)
+	public ResponseEntity<Map<String, String>> customerNotActive(CustomerNotActiveException e) {
+		return error(HttpStatus.UNPROCESSABLE_CONTENT, "CUSTOMER_NOT_ACTIVE", e.getMessage());
+	}
 
 	private ResponseEntity<Map<String, String>> error(HttpStatusCode status, String code, String msg) {
 

@@ -24,13 +24,6 @@ public class CustomerDto {
 	public CustomerDto() {
 	}
 
-	public CustomerDto(Long customerId, String fullName, String email, CustomerStatus status) {
-		this.customerId = customerId;
-		this.fullName = fullName;
-		this.email = email;
-		this.status = status;
-	}
-
 	public Long getCustomerId() {
 		return customerId;
 	}
@@ -45,6 +38,22 @@ public class CustomerDto {
 
 	public CustomerStatus getStatus() {
 		return status;
+	}
+
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setStatus(CustomerStatus status) {
+		this.status = status;
 	}
 
 	@Override
